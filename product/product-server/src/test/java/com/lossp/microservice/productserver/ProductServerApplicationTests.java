@@ -1,10 +1,10 @@
-package com.lossp.microservice.transactionimpl;
+package com.lossp.microservice.productserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TransactionImplApplicationTests {
+class ProductServerApplicationTests {
 
     @Test
     void contextLoads() {
