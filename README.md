@@ -11,3 +11,6 @@ A experimental microservices. And a fast demo to microservices.
     - [ ] start dubbo service on local.
       - [x] use the standalone model. On local Machine.
       - [] add dependency to the transaction service. register transaction service when it starts up.
+### Issues encountered
+  Spring boot 2.7.0 is working at the moment.
+  Spring boot 3.x is not compatible with the dubbo 3.0 version. Which caused the others services cannot start successfully. The payment now is the correct version and organized in a more reasonable way.
