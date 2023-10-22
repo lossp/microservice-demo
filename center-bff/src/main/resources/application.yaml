@@ -1,2 +1,12 @@
 server:
   port: 8080
+
+spring:
+  application:
+    name: center-bff
+
+dubbo:
+  # 注册中心地址
+  registry:
+    address: nacos://127.0.0.1:8848
+    register: false

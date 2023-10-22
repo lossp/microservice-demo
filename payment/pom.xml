@@ -12,6 +12,7 @@
     <modules>
         <module>payment-server</module>
         <module>payment-impl</module>
+        <module>payment-intf</module>
     </modules>
 
     <properties>
