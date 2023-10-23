@@ -16,6 +16,11 @@ A experimental microservices. And a fast demo to microservices.
       - [x] use the standalone model. On local Machine.
       - [x] add dependency to the payment service. register transaction service when it starts up.
       - [x] add dependency to the center-bff service. register center-bff service when it starts up.
+- [ ] implement the rocketmq for bff & payment
+  - [x] server setup for rocketmq (local machine. 1 instance)
+  - [x] bff rocketmq setup
+  - [x] payment rocketmq setup
+  - [ ] the Arvo serialize implementation.
 ### Issues encountered
   1. Spring boot 2.7.0 is working at the moment.
   2. Spring boot 3.x is not compatible with the dubbo 3.0 version. Which caused the others services cannot start successfully. The payment now is the correct version and organized in a more reasonable way.
