@@ -14,6 +14,8 @@ public class MQPaymentService implements RocketMQListener {
 
     @Override
     public void onMessage(Object o) {
+        String string = o.toString();
+        System.out.println("===" + string);
         System.out.println("this is the payment service. the rocketmq message has successfully reached its destination.");
     }
 }
