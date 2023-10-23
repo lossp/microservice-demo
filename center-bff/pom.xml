@@ -17,10 +17,17 @@
         <java.version>17</java.version>
         <nacos.version>2.0.3</nacos.version>
         <dubbo.version>3.0.6</dubbo.version>
+        <rocketmq.version>2.2.1</rocketmq.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-spring-boot-starter</artifactId>
+            <version>${rocketmq.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
