@@ -28,10 +28,4 @@ public class Controller {
         return "Yes!";
     }
 
-    @GetMapping("/sequential")
-    public String sequentialProcess() {
-        paymentMqService.startPaymentEventsInOrder();
-        return "Yes!";
-    }
-
 }
