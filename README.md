@@ -1,6 +1,12 @@
 # microservice-demo
 A experimental microservices. And a fast demo to microservices.
 
+
+### Need to be done.
+- [ ] consume the messages sequentially
+- [ ] consume the messages concurrently
+- [ ] use lite pull
+ 
 ### Tasks
 - [ ] build the transaction service
   - [x] build the framework
@@ -20,6 +26,9 @@ A experimental microservices. And a fast demo to microservices.
   - [x] server setup for rocketmq (local machine. 1 instance)
   - [x] bff rocketmq setup
   - [x] payment rocketmq setup
+  - [x] add the UI for the rocketMQ
+    - [x] download the rocketmq-dashboard jar 
+    - [x] build up the dashboard
   - [ ] the Arvo serialize implementation.
 ### Issues encountered
   1. Spring boot 2.7.0 is working at the moment.
