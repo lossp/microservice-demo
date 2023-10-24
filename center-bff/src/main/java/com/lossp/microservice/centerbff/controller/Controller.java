@@ -27,5 +27,10 @@ public class Controller {
         paymentMqService.startPayment();
         return "Yes!";
     }
+    @GetMapping("/sequential")
+    public String sequentialProcess() {
+        paymentMqService.startPaymentEventsInOrder();
+        return "Yes!";
+    }
 
 }
