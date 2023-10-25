@@ -3,9 +3,13 @@ A experimental microservices. And a fast demo to microservices.
 
 
 ### Need to be done.
-- [ ] consume the messages sequentially
-- [ ] consume the messages concurrently
-- [ ] use lite pull
+- [ ] rocketMQ part
+  - [x] consume the messages sequentially
+    - on the producer side. use send orderly method, and on the consumer side. in the annotation, add CONSUME.ORDER value.
+  - [x] consume the messages concurrently
+    - the default method is the concurrent consuming.
+  - [ ] use lite pull
+  - [ ] the rocketMQ transaction.
  
 ### Tasks
 - [ ] build the transaction service
@@ -39,3 +43,8 @@ A experimental microservices. And a fast demo to microservices.
 
 ### Using the RocketMQ to decouple the payment and bff
 1. [ ] download the rocketMQ and run it locally. (RocketMQ works well with java-8. not the java-11. So took me sometime to fix)
+
+### Dependencies 
+1. rocketmq server start 
+2. rocketmq broker start
+3. rocketmq console start
