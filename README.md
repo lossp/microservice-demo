@@ -45,6 +45,12 @@ A experimental microservices. And a fast demo to microservices.
 1. [ ] download the rocketMQ and run it locally. (RocketMQ works well with java-8. not the java-11. So took me sometime to fix)
 
 ### Dependencies 
-1. rocketmq server start 
-2. rocketmq broker start
+1. rocketmq broker start
+   `nohup sh mqbroker -c ../conf/broker.conf &` (in local env, need to add the namesrv address to the conf file)
+2. rocketmq namesrv start
+   `nohup sh namesrv &`
 3. rocketmq console start
+   `nohup java -jar -server -Xms256m -Xmx256m -Drocketmq.config.namesrvAddr=localhost:9876 -Dserver.port8088 rocketmq-console-ng-1.0.1.jar`
+4. nacos standalone model start
+   `sh startup.sh -m standalone`
+5. mysql
