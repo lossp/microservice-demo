@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: payment-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/payment-center
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 dubbo:
   # 注册中心地址
