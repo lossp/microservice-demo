@@ -11,6 +11,7 @@
     <modules>
         <module>center-bff</module>
         <module>payment</module>
+        <module>transaction</module>
     </modules>
 
 </project>
