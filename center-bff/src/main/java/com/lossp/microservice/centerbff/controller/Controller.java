@@ -33,4 +33,10 @@ public class Controller {
         return "Yes!";
     }
 
+    @GetMapping("/delay")
+    public String delayMessage() {
+        paymentMqService.startDelayPaymentEvent();
+        return "Delay Message";
+    }
+
 }

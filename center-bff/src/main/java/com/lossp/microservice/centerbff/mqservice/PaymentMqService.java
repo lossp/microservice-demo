@@ -4,6 +4,7 @@ import com.example.paymentintf.payment.dto.PaymentCreateRequestDTO;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -47,5 +48,16 @@ public class PaymentMqService {
         for (String event:transactionEvents) {
             rocketMQTemplate.syncSendOrderly(SEQUENTIAL_TOPIC, event, transactionId);
         }
+    }
+
+    public void startDelayPaymentEvent() {
+        // TODO need to wrap it up. using the GenericMessage
+        PaymentCreateRequestDTO dto = new PaymentCreateRequestDTO();
+        dto.setPaymentId("payment-001");
+        dto.setAmount(BigDecimal.valueOf(100L));
+        dto.setChannel("WechatPay");
+        GenericMessage<PaymentCreateRequestDTO> genericMessage = new GenericMessage<>(dto);
+
+        rocketMQTemplate.syncSend(START_PAYMENT_TOPIC, genericMessage, 1000, 3);
     }
 }
