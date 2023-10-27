@@ -10,6 +10,11 @@ A experimental microservices. And a fast demo to microservices.
     - the default method is the concurrent consuming.
   - [ ] use lite pull
   - [ ] the rocketMQ transaction.
+- [ ] add trace id
+  - [ ] add traceId between the multiple threads
+  - [ ] add traceId to the rpc components communication
+  - [ ] add traceId between rocketmq messages
+  - [ ] add traceId to callback (or design one)
  
 ### Tasks
 - [ ] build the transaction service
