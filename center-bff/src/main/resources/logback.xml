@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+<!--    <import class="ch.qos.logback.core.ConsoleAppender"/>-->
+<!--    <import class="com.lossp.microservice.centerbff.config.LogLayoutConfiguration"/>-->
+<!--    <import class="ch.qos.logback.core.encoder.LayoutWrappingEncoder"/>-->
 
     <property name="LOGS" value="./logs" />
+    <springProperty scope="context" name="myappName" source="spring.application.name"/>
 
     <appender name="Console"
               class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>
-                %green(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable
+                %green(%d{ISO8601}) application=${myappName} %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable
             </Pattern>
         </layout>
     </appender>
 
     <appender name="RollingFile"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOGS}/center-bff-log.log</file>
+        <file>${LOGS}/${myappName}.log</file>
         <encoder
                 class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+            <Pattern>%d %p service=${myappName} %C{1.} [%t] %m%n</Pattern>
         </encoder>
 
         <rollingPolicy
