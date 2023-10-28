@@ -11,7 +11,7 @@
               class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
             <Pattern>
-                %green(%d{ISO8601}) application=${myappName} %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable
+                %green(%d{ISO8601}) application=${myappName} trace_id=%mdc{trace_id} span_id=%mdc{span_id} trace_flags=%mdc{trace_flags} %5p %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable
             </Pattern>
         </layout>
     </appender>
