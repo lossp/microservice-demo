@@ -2,6 +2,9 @@ package com.lossp.microservice.centerbff.controller;
 
 import com.lossp.microservice.centerbff.mqservice.PaymentMqService;
 import com.lossp.microservice.centerbff.rpcService.PaymentRpcService;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.SpanBuilder;
+import io.opentelemetry.api.trace.Tracer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
     private static final Logger logger = LoggerFactory.getLogger(Controller.class);
 
+    private final Tracer tracer;
+
 
     private final PaymentRpcService paymentRpcService;
     private final PaymentMqService paymentMqService;
 
-    public Controller(PaymentRpcService paymentRpcService, PaymentMqService paymentMqService) {
+    public Controller(Tracer tracer, PaymentRpcService paymentRpcService, PaymentMqService paymentMqService) {
+        this.tracer = tracer;
         this.paymentRpcService = paymentRpcService;
         this.paymentMqService = paymentMqService;
     }
@@ -28,8 +34,10 @@ public class Controller {
 
     @GetMapping("/rocketMqTest")
     public String toRocketMQ() {
+        Span span = tracer.spanBuilder("say-hi").startSpan();
         logger.info("----- entering");
         paymentMqService.startPayment();
+        span.end();
         return "Yes!";
     }
     @GetMapping("/sequential")
