@@ -59,3 +59,5 @@ A experimental microservices. And a fast demo to microservices.
 4. nacos standalone model start
    `sh startup.sh -m standalone`
 5. mysql
+6. Open Telemetry
+   The original traceId is way too simple. Cannot form the causality in the calling chain and cannot show the performance as well. Therefore need to implement a more advanced framework for better observation and tracing.
