@@ -35,6 +35,8 @@ public class Controller {
     @GetMapping("/rocketMqTest")
     public String toRocketMQ() {
         Span span = tracer.spanBuilder("say-hi").startSpan();
+        span.setAttribute("Age", 15);
+        span.setAttribute("Name", "rci");
         logger.info("----- entering");
         paymentMqService.startPayment();
         span.end();
