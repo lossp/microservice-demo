@@ -1,6 +1,10 @@
 package com.lossp.microservice.centerbff.mqservice;
 
 import com.example.paymentintf.payment.dto.PaymentCreateRequestDTO;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.SpanBuilder;
+import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Scope;
 import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
@@ -17,28 +21,41 @@ public class PaymentMqService {
     private static final String START_PAYMENT_TOPIC = "payment-topic";
     private static final String SEQUENTIAL_TOPIC = "payment-sequential-topic";
     private final RocketMQTemplate rocketMQTemplate;
+    private final Tracer tracer;
 
-    public PaymentMqService(RocketMQTemplate rocketMQTemplate) {
+    public PaymentMqService(RocketMQTemplate rocketMQTemplate, Tracer tracer) {
         this.rocketMQTemplate = rocketMQTemplate;
+        this.tracer = tracer;
+    }
+
+    private String formatTime(LocalDateTime dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-hhmmss");
+        return formatter.format(dateTime);
     }
 
     public void startPayment() {
-        PaymentCreateRequestDTO dto = new PaymentCreateRequestDTO();
-        dto.setPaymentId("payment-001");
-        dto.setAmount(BigDecimal.valueOf(100L));
-        dto.setChannel("WechatPay");
-        rocketMQTemplate.asyncSend(START_PAYMENT_TOPIC, dto, new SendCallback() {
-            @Override
-            public void onSuccess(SendResult sendResult) {
-                System.out.println("Now is success");
-            }
+        Span span = tracer.spanBuilder("startPayment").startSpan();
+        try (Scope s = span.makeCurrent()) {
+            formatTime(LocalDateTime.now());
+            PaymentCreateRequestDTO dto = new PaymentCreateRequestDTO();
+            dto.setPaymentId("payment-001");
+            dto.setAmount(BigDecimal.valueOf(100L));
+            dto.setChannel("WechatPay");
+            rocketMQTemplate.asyncSend(START_PAYMENT_TOPIC, dto, new SendCallback() {
+                @Override
+                public void onSuccess(SendResult sendResult) {
+                    System.out.println("Now is success");
+                }
 
-            @Override
-            public void onException(Throwable throwable) {
-                System.out.println(throwable.getLocalizedMessage());
-                System.out.println("Now is failed");
-            }
-        });
+                @Override
+                public void onException(Throwable throwable) {
+                    System.out.println(throwable.getLocalizedMessage());
+                    System.out.println("Now is failed");
+                }
+            });
+        } finally {
+            span.end();
+        }
     }
 
     public void startPaymentEventsInOrder() {

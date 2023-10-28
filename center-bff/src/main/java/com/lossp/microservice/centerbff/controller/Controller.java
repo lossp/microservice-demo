@@ -5,6 +5,7 @@ import com.lossp.microservice.centerbff.rpcService.PaymentRpcService;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanBuilder;
 import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.context.Scope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,9 +38,13 @@ public class Controller {
         Span span = tracer.spanBuilder("say-hi").startSpan();
         span.setAttribute("Age", 15);
         span.setAttribute("Name", "rci");
-        logger.info("----- entering");
-        paymentMqService.startPayment();
-        span.end();
+
+        try (Scope scope = span.makeCurrent()) {
+            logger.info("----- entering");
+            paymentMqService.startPayment();
+        } finally {
+            span.end();
+        }
         return "Yes!";
     }
     @GetMapping("/sequential")
