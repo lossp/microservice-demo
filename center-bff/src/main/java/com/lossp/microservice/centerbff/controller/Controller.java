@@ -2,10 +2,7 @@ package com.lossp.microservice.centerbff.controller;
 
 import com.lossp.microservice.centerbff.mqservice.PaymentMqService;
 import com.lossp.microservice.centerbff.rpcService.PaymentRpcService;
-import io.opentelemetry.api.trace.Span;
-import io.opentelemetry.api.trace.SpanBuilder;
 import io.opentelemetry.api.trace.Tracer;
-import io.opentelemetry.context.Scope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,14 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
     private static final Logger logger = LoggerFactory.getLogger(Controller.class);
 
-    private final Tracer tracer;
-
-
     private final PaymentRpcService paymentRpcService;
     private final PaymentMqService paymentMqService;
 
-    public Controller(Tracer tracer, PaymentRpcService paymentRpcService, PaymentMqService paymentMqService) {
-        this.tracer = tracer;
+    public Controller(PaymentRpcService paymentRpcService, PaymentMqService paymentMqService) {
         this.paymentRpcService = paymentRpcService;
         this.paymentMqService = paymentMqService;
     }
@@ -35,16 +28,8 @@ public class Controller {
 
     @GetMapping("/rocketMqTest")
     public String toRocketMQ() {
-        Span span = tracer.spanBuilder("say-hi").startSpan();
-        span.setAttribute("Age", 15);
-        span.setAttribute("Name", "rci");
-
-        try (Scope scope = span.makeCurrent()) {
-            logger.info("----- entering");
-            paymentMqService.startPayment();
-        } finally {
-            span.end();
-        }
+        logger.info("----- entering");
+        paymentMqService.startPayment();
         return "Yes!";
     }
     @GetMapping("/sequential")
