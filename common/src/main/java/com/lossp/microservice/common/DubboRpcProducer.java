@@ -1,5 +1,6 @@
 package com.lossp.microservice.common;
 
+import com.alibaba.fastjson.JSON;
 import io.opentelemetry.api.trace.Span;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
@@ -32,7 +33,7 @@ public class DubboRpcProducer implements Filter {
 
     private void preHandle() {
         Span span = ContextSession.getSpan();
-        RpcContext.getClientAttachment().setAttachment("TRACING_SPAN", span);
+        RpcContext.getClientAttachment().setAttachment("TRACING_SPAN", JSON.toJSONString(span));
     }
 
 }
