@@ -12,11 +12,11 @@ import org.slf4j.LoggerFactory;
 public class DubboRpcProducer implements Filter {
 
     Logger logger = LoggerFactory.getLogger(DubboRpcProducer.class);
-    private final ThreadLocal<Span> threadLocal = new ThreadLocal<>();
 
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-        logger.info("[Dubbo {}.{}]. --Span is: {}",invoker.getInterface(), invocation.getMethodName(), threadLocal.get());
+
+        logger.info("[Dubbo {}.{}]. --Span is: {}",invoker.getInterface(), invocation.getMethodName(), ContextSession.getSpan());
         preHandle();
         try {
             return invoker.invoke(invocation);
@@ -27,11 +27,11 @@ public class DubboRpcProducer implements Filter {
     }
 
     private void afterHandle() {
-        threadLocal.remove();
+        ContextSession.remove();
     }
 
     private void preHandle() {
-        Span span = threadLocal.get();
+        Span span = ContextSession.getSpan();
         RpcContext.getClientAttachment().setAttachment("TRACING_SPAN", span);
     }
 

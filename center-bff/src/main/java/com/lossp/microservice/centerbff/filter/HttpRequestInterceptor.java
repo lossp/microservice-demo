@@ -1,5 +1,6 @@
 package com.lossp.microservice.centerbff.filter;
 
+import com.lossp.microservice.common.ContextSession;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
 import org.slf4j.Logger;
@@ -14,7 +15,6 @@ public class HttpRequestInterceptor implements HandlerInterceptor {
     Logger logger = LoggerFactory.getLogger(HttpRequestInterceptor.class);
 
     private final Tracer tracer;
-    private final ThreadLocal<Span> threadLocal = new ThreadLocal<>();
 
     public HttpRequestInterceptor(Tracer tracer) {
         this.tracer = tracer;
@@ -25,14 +25,14 @@ public class HttpRequestInterceptor implements HandlerInterceptor {
             throws Exception {
         logger.info("preHandle");
         Span span = tracer.spanBuilder(request.getRequestURI()).startSpan();
-        threadLocal.set(span);
+        ContextSession.setSpan(span);
         return true;
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
             throws Exception {
-        Span span = threadLocal.get();
+        Span span = ContextSession.getSpan();
         logger.info("postHandle");
         span.end();
     }
@@ -40,7 +40,7 @@ public class HttpRequestInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
-        threadLocal.remove();
+        ContextSession.remove();
         logger.info("afterCompletion");
     }
 }
