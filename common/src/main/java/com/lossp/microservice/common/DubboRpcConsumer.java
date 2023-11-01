@@ -18,16 +18,7 @@ public class DubboRpcConsumer implements Filter {
 
         logger.info("[Dubbo {}.{}]. --Span is: {}",invoker.getInterface(), invocation.getMethodName(), ContextSession.getSpan());
         preHandle();
-        try {
-            return invoker.invoke(invocation);
-        } finally {
-            // clear
-            afterHandle();
-        }
-    }
-
-    private void afterHandle() {
-        ContextSession.remove();
+        return invoker.invoke(invocation);
     }
 
     private void preHandle() {
