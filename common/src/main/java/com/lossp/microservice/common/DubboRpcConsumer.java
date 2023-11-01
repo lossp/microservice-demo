@@ -15,19 +15,23 @@ public class DubboRpcConsumer implements Filter {
 
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-        String tracingSpan = RpcContext.getClientAttachment().getAttachment("TRACING_SPAN");
-        Span span = JSON.parseObject(tracingSpan, Span.class);
-        logger.info("[Dubbo {}.{}]. --Span is: {}",invoker.getInterface(), invocation.getMethodName(), span);
-        ContextSession.setSpan(span);
+
+        logger.info("[Dubbo {}.{}]. --Span is: {}",invoker.getInterface(), invocation.getMethodName(), ContextSession.getSpan());
+        preHandle();
         try {
             return invoker.invoke(invocation);
         } finally {
-            span.end();
+            // clear
             afterHandle();
         }
     }
 
     private void afterHandle() {
         ContextSession.remove();
+    }
+
+    private void preHandle() {
+        Span span = ContextSession.getSpan();
+        RpcContext.getClientAttachment().setAttachment("TRACING_SPAN", JSON.toJSONString(span));
     }
 }

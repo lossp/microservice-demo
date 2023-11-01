@@ -1,2 +1,2 @@
-bffProvider=com.lossp.microservice.common.DubboRpcProducer
-paymentConsumer=com.lossp.microservice.common.DubboRpcConsumer
+paymentProvider=com.lossp.microservice.common.DubboRpcProducer
+bffConsumer=com.lossp.microservice.common.DubboRpcConsumer

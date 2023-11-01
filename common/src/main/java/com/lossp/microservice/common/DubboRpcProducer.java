@@ -9,31 +9,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-@Activate(group = {CommonConstants.PROVIDER, CommonConstants.CONSUMER})
+@Activate(group = {CommonConstants.PROVIDER})
 public class DubboRpcProducer implements Filter {
 
     Logger logger = LoggerFactory.getLogger(DubboRpcProducer.class);
 
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-
-        logger.info("[Dubbo {}.{}]. --Span is: {}",invoker.getInterface(), invocation.getMethodName(), ContextSession.getSpan());
-        preHandle();
+        String tracingSpan = RpcContext.getClientAttachment().getAttachment("TRACING_SPAN");
+        Span span = JSON.parseObject(tracingSpan, Span.class);
+        logger.info("[Dubbo {}.{}]. --Span is: {}",invoker.getInterface(), invocation.getMethodName(), span);
+        ContextSession.setSpan(span);
         try {
             return invoker.invoke(invocation);
         } finally {
-            // clear
+            span.end();
             afterHandle();
         }
     }
 
     private void afterHandle() {
         ContextSession.remove();
-    }
-
-    private void preHandle() {
-        Span span = ContextSession.getSpan();
-        RpcContext.getClientAttachment().setAttachment("TRACING_SPAN", JSON.toJSONString(span));
     }
 
 }

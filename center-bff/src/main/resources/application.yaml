@@ -10,8 +10,8 @@ dubbo:
   registry:
     address: nacos://127.0.0.1:8848
     register: false
-  provider:
-    filter: bffProvider
+  consumer:
+    filter: bffConsumer
 
 rocketmq:
   name-server: "127.0.0.1:9876"
