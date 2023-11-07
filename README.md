@@ -79,7 +79,15 @@ A experimental microservices. And a fast demo to microservices.
 ### Deploy the Jaeger Tracing In production
 The Infrastructure is the k8s.
 **Prerequisite**
-1. Elasticsearch (For the Jaeger Tracing Storage) 2Gb for memory is required. 
+1. Elasticsearch (For the Jaeger Tracing Storage) 2Gb for memory is required.
+2. Jaeger-Operator
+3. K8s
 #### Steps:
-1. Set up the Elasticsearch.
+1. Set up k8s env
+2. Set up the elasticSearch in k8s https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-deploy-elasticsearch.html
+3. Set up cert-manager
+    `kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.6.3/cert-manager.yaml`
+4. Set up Jaeger-operator
+    `kubectl create -f https://github.com/jaegertracing/jaeger-operator/releases/download/v1.49.0/jaeger-operator.yaml -n observability`
+5. Set up the Jaeger backend.
 
