@@ -75,3 +75,11 @@ A experimental microservices. And a fast demo to microservices.
    -p 14269:14269 \
    -p 9411:9411 \
    jaegertracing/all-in-one:1.50`
+
+### Deploy the Jaeger Tracing In production
+The Infrastructure is the k8s.
+**Prerequisite**
+1. Elasticsearch (For the Jaeger Tracing Storage) 2Gb for memory is required. 
+#### Steps:
+1. Set up the Elasticsearch.
+
