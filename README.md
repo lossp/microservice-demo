@@ -90,4 +90,5 @@ The Infrastructure is the k8s.
 4. Set up Jaeger-operator
     `kubectl create -f https://github.com/jaegertracing/jaeger-operator/releases/download/v1.49.0/jaeger-operator.yaml -n observability`
 5. Set up the Jaeger backend.
+6. Set up the nacos inside the k8s
 
