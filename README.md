@@ -75,6 +75,9 @@ A experimental microservices. And a fast demo to microservices.
    -p 14269:14269 \
    -p 9411:9411 \
    jaegertracing/all-in-one:1.50`
+8. Sentinels (used for degrade mainly and traffic control)
+    download the version 1.8.2 package. and run the command below.
+    `java -Dserver.port=8080 -Dcsp.sentinel.dashboard.server=localhost:8080 -Dproject.name=sentinel-dashboard -jar sentinel-dashboard-1.8.2.jar`
 
 ### Deploy the Jaeger Tracing In production
 The Infrastructure is the k8s.
