@@ -55,7 +55,7 @@ A experimental microservices. And a fast demo to microservices.
 2. rocketmq namesrv start
    `nohup sh mqnamesrv &`
 3. rocketmq console start
-   `nohup java -jar -server -Xms256m -Xmx256m -Drocketmq.config.namesrvAddr=localhost:9876 -Dserver.port8088 rocketmq-console-ng-1.0.1.jar`
+   `nohup java -jar -server -Xms256m -Xmx256m -Drocketmq.config.namesrvAddr=localhost:9876 -Dserver.port8088 rocketmq-console-ng-1.0.1.jar &`
 4. nacos standalone model start
    `sh startup.sh -m standalone`
 5. mysql
@@ -77,7 +77,7 @@ A experimental microservices. And a fast demo to microservices.
    jaegertracing/all-in-one:1.50`
 8. Sentinels (used for degrade mainly and traffic control)
     download the version 1.8.2 package. and run the command below.
-    `java -Dserver.port=8080 -Dcsp.sentinel.dashboard.server=localhost:8080 -Dproject.name=sentinel-dashboard -jar sentinel-dashboard-1.8.2.jar`
+    `java -Dserver.port=8080 -Dcsp.sentinel.dashboard.server=localhost:8080 -Dproject.name=sentinel-dashboard -jar sentinel-dashboard-1.8.2.jar &`
 
 ### Deploy the Jaeger Tracing In production
 The Infrastructure is the k8s.
