@@ -26,6 +26,11 @@ public class Controller {
         return "Welcome";
     }
 
+    @GetMapping("/sentinel")
+    public String sentinelTest() {
+        return paymentRpcService.testSentinelApi();
+    }
+
     @GetMapping("/rocketMqTest")
     public String toRocketMQ() {
         logger.info("----- entering");

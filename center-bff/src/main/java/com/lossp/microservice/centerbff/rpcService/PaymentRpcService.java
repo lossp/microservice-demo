@@ -12,4 +12,8 @@ public class PaymentRpcService {
     public void testPayment() {
         paymentService.processPayment();
     }
+
+    public String testSentinelApi() {
+        return paymentService.process3rdPartyPayment();
+    }
 }
